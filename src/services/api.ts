@@ -7,7 +7,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use((request) => {
   if (request.headers) {
-    request.headers.Authorization = BOILERPLATE_CANDIDATE_TOKEN
+    request.headers.authorization = BOILERPLATE_CANDIDATE_TOKEN
   }
 
   return request

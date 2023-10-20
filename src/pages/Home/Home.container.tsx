@@ -10,6 +10,7 @@ const HomeContainer = () => {
 
   useEffect(() => {
     const getAllBikes = async () => {
+      debugger
       const response = await apiClient.get('/bikes')
       setBikes(response.data)
     }

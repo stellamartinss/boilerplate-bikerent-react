@@ -16,7 +16,7 @@ const Home = ({ bikes, appIsNotConfigured }: HomeProps) => {
 
       <Content>
         <BikeList bikes={bikes} />
-        {/* {appIsNotConfigured && <ConfigErrorMessage />} */} 
+        {appIsNotConfigured && <ConfigErrorMessage />} 
       </Content>
     </div>
   )
