@@ -18,9 +18,9 @@ import {
   LikeButton,
   OverviewContainer,
   PriceRow,
-  BookingCalendar
 } from './BikeDetails.styles';
-import React, { useState } from 'react';
+import BookingCalendar from 'components/BookingCalendar/BookingCalendar.component';
+
 
 interface BikeDetailsProps {
   bike?: Bike;
@@ -32,8 +32,6 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
 
   const servicesFee = getServicesFee(rateByDay);
   const total = rateByDay + servicesFee;
-
-  const [date, setDate] = useState(null);
 
   return (
     <div data-testid='bike-details-page'>
@@ -137,13 +135,7 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
           variant='outlined'
           data-testid='bike-overview-container'
         >
-          <BookingCalendar
-            value={date}
-            onChange={(e: any) => console.log(e.value)}
-            inline
-            showWeek
-          />
-
+          <BookingCalendar />
           <Typography variant='h2' fontSize={16} marginBottom={1.25}>
             Booking Overview
           </Typography>

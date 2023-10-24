@@ -1,0 +1,78 @@
+button.rdp-button_reset.rdp-button.rdp-day {
+  background: transparent;
+  border: unset;
+  color: white;
+  opacity: 0.5;
+  padding: 10px 10px;
+  font-weight: 400;
+}
+
+table#test-grid-0 {
+  min-width: 300px;
+}
+
+.rdp-caption_label {
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.rdp-caption {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.rdp-caption_label {
+  flex: 3;
+}
+
+.rdp-nav {
+  flex: 2;
+  text-align: center;
+}
+
+button.rdp-button_reset.rdp-button.rdp-nav_button.rdp-nav_button_previous,
+button.rdp-button_reset.rdp-button.rdp-nav_button.rdp-nav_button_next {
+  background: transparent;
+  border: 1px solid white;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+svg.rdp-nav_icon {
+  color: white;
+}
+
+th.rdp-head_cell {
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.5;
+}
+
+td.rdp-cell {
+  text-align: center;
+}
+
+button.rdp-button_reset.rdp-button.rdp-nav_button.rdp-nav_button_previous {
+  margin-right: 10px;
+}
+
+button.rdp-button_reset.rdp-button.rdp-day.rdp-day_range_start,
+button.rdp-button_reset.rdp-button.rdp-day.rdp-day_range_end {
+  background: white;
+  opacity: 1;
+  color: #1f49d1;
+  padding: 11px 11px;
+  border-radius: 20px;
+}
+
+button.rdp-button_reset.rdp-button.rdp-day.rdp-day_selected.rdp-day_range_middle {
+  opacity: 0.5;
+  background-color: white;
+  border-radius: 20px;
+  color: #1f49d1;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-9emuhu-MuiPaper-root-MuiDrawer-paper {
+  background-color: #1f49d1;
+  border-radius: 30px 30px 0px 0px;
+}

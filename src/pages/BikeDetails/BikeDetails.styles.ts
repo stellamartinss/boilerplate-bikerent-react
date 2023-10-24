@@ -14,8 +14,6 @@ import ChevronRightOutlined from '@mui/icons-material/ChevronRightOutlined';
 import HomeOutlined from '@mui/icons-material/HomeOutlined';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 
-import { Calendar, CalendarBaseProps } from 'primereact/calendar';
-
 export const BreadcrumbContainer = styled(Box)<BoxProps>(({ theme }) => ({
   position: 'relative',
   margin: '32px 0 32px 100px',
@@ -79,7 +77,7 @@ export const InfoIcon = styled(InfoOutlined)(({ theme }) => ({
 export const OverviewContainer = styled(Card)<CardProps>(({ theme }) => ({
   borderColor: theme.palette.grey[500],
   padding: 34,
-  maxHeight: 295,
+  maxHeight: 895,
 }));
 
 export const BookingButton = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -95,11 +93,4 @@ export const PriceRow = styled(Box)<BoxProps>(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-}));
-
-export const BookingCalendar = styled(Calendar)<CalendarBaseProps>(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  backgroundColor: 'blue'
 }));
