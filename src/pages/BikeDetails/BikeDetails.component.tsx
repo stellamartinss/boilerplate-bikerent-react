@@ -1,4 +1,12 @@
-import { Box, Breadcrumbs, Divider, Link, Typography } from '@mui/material';
+import {
+  Box,
+  Breadcrumbs,
+  Dialog,
+  Divider,
+  Link,
+  SwipeableDrawer,
+  Typography,
+} from '@mui/material';
 import BikeImageSelector from 'components/BikeImageSelector';
 import BikeSpecs from 'components/BikeSpecs';
 import BikeType from 'components/BikeType';
@@ -7,31 +15,135 @@ import Header from 'components/Header';
 import Bike from 'models/Bike';
 import { getServicesFee } from './BikeDetails.utils';
 import {
+  BikeBookedBox,
+  BikeImage,
   BookingButton,
   BreadcrumbContainer,
   BreadcrumbHome,
   BreadcrumbSeparator,
   Content,
   DetailsContainer,
+  DivDesktopCalendar,
   FavoriteIcon,
+  GoToHomeButton,
   InfoIcon,
   LikeButton,
   OverviewContainer,
   PriceRow,
 } from './BikeDetails.styles';
 import BookingCalendar from 'components/BookingCalendar/BookingCalendar.component';
+import { DateRange, DayPicker } from 'react-day-picker';
+import { useEffect, useState } from 'react';
+import { addDays, format } from 'date-fns';
 
+const pastMonth = new Date(2020, 10, 15);
 
 interface BikeDetailsProps {
   bike?: Bike;
 }
 
 const BikeDetails = ({ bike }: BikeDetailsProps) => {
-  const rateByDay = bike?.rate || 0;
-  const rateByWeek = rateByDay * 7;
+  const ratesByDay = bike?.rate || 0;
+  const rateByWeek = ratesByDay * 7;
+  const today = new Date();
 
-  const servicesFee = getServicesFee(rateByDay);
-  const total = rateByDay + servicesFee;
+  const servicesFee = getServicesFee(ratesByDay);
+
+  const defaultSelected: DateRange = {
+    from: pastMonth,
+    to: addDays(pastMonth, 4),
+  };
+
+  const [dateRange, setDateRange] = useState<DateRange | undefined | any>(
+    defaultSelected
+  );
+  const [rangeDaysCount, setRangeDaysCount] = useState<number>(4);
+  const [subtotal, setSubTotal] = useState<number>(bike?.rate || 0);
+  const [total, setTotal] = useState<number>(ratesByDay + servicesFee);
+  const [isBikeBooked, setIsBikeBooked] = useState(false);
+  const [openIsBookedDialog, setOpenoIsBookedDialog] = useState(false);
+
+  useEffect(() => {
+    const totalDays = calculateHowManyBookingDays(dateRange);
+    const sTotal = ratesByDay * totalDays;
+
+    setRangeDaysCount(totalDays);
+    setSubTotal(sTotal);
+    setTotal(sTotal + servicesFee);
+  }, [dateRange, ratesByDay, servicesFee]);
+
+  const handleBookingBike = () => {
+    // const getAllBikes = async () => {
+    //   const response = await apiClient.get('/bikes');
+    //   setBikes(response.data);
+    // };
+    setOpenoIsBookedDialog(true);
+    setIsBikeBooked(true);
+  };
+
+  const calculateHowManyBookingDays = (range: any) => {
+    const fromDate: any = new Date(range.from);
+    const toDate: any = new Date(range.to);
+
+    const timeDifference = toDate - fromDate;
+
+    const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+    return daysDifference;
+  };
+
+  const handleClickOpen = () => {
+    setOpenoIsBookedDialog(true);
+  };
+
+  const bikeBooked = (
+    <BikeBookedBox>
+      <Typography marginTop={1.5} fontSize={24} fontWeight={800}>
+        Thank you!
+      </Typography>
+      <Typography marginTop={2} marginBottom={5} fontSize={16} fontWeight={400}>
+        Your bike is booked
+      </Typography>
+
+      {bike && (
+        <>
+          <BikeImage
+            src={bike.imageUrls[0]}
+            width='100%'
+            alt='Bike Image'
+            data-testid='bike-image'
+            isLoaded={true}
+          />
+
+          <Typography marginTop={5} fontSize={18} fontWeight={600}>
+            {bike.name}
+          </Typography>
+
+          <BikeType type={bike.type} />
+        </>
+      )}
+    </BikeBookedBox>
+  );
+
+  const desktopBooked = <DivDesktopCalendar>{bikeBooked}</DivDesktopCalendar>;
+
+  const mobileBikeBooked = (
+    <Dialog open={openIsBookedDialog}>
+      {bikeBooked}
+
+      <Link href='/' data-testid='go-to-home-btn'>
+        <GoToHomeButton
+          fullWidth
+          disableElevation
+          variant='contained'
+          data-testid='bike-select'
+          color='secondary'
+        >
+          Go to Home Page
+        </GoToHomeButton>
+      </Link>
+    </Dialog>
+  );
 
   return (
     <div data-testid='bike-details-page'>
@@ -108,7 +220,7 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
             <PriceRow>
               <Typography>Day</Typography>
               <Typography fontWeight={800} fontSize={24} letterSpacing={1}>
-                {rateByDay} €
+                {ratesByDay} €
               </Typography>
             </PriceRow>
 
@@ -135,43 +247,65 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
           variant='outlined'
           data-testid='bike-overview-container'
         >
-          <BookingCalendar />
-          <Typography variant='h2' fontSize={16} marginBottom={1.25}>
-            Booking Overview
-          </Typography>
-          <Divider />
-          <PriceRow marginTop={1.75} data-testid='bike-overview-single-price'>
-            <Box display='flex' alignItems='center'>
-              <Typography marginRight={1}>Subtotal</Typography>
-              <InfoIcon fontSize='small' />
-            </Box>
+          {mobileBikeBooked}
 
-            <Typography>{rateByDay} €</Typography>
-          </PriceRow>
-          <PriceRow marginTop={1.5} data-testid='bike-overview-single-price'>
-            <Box display='flex' alignItems='center'>
-              <Typography marginRight={1}>Service Fee</Typography>
-              <InfoIcon fontSize='small' />
-            </Box>
+          {isBikeBooked && desktopBooked}
 
-            <Typography>{servicesFee} €</Typography>
-          </PriceRow>
-          <PriceRow marginTop={1.75} data-testid='bike-overview-total'>
-            <Typography fontWeight={800} fontSize={16}>
-              Total
-            </Typography>
-            <Typography variant='h2' fontSize={24} letterSpacing={1}>
-              {total} €
-            </Typography>
-          </PriceRow>
-          <BookingButton
-            fullWidth
-            disableElevation
-            variant='contained'
-            data-testid='bike-booking-button'
-          >
-            Add to booking
-          </BookingButton>
+          {!isBikeBooked && (
+            <>
+              <BookingCalendar
+                dateRange={dateRange}
+                setDateRange={setDateRange}
+                pastMonth={pastMonth}
+                selected={today}
+                bike={bike}
+              />
+
+              <Typography variant='h2' fontSize={16} marginBottom={1.25}>
+                Booking Overview
+              </Typography>
+              <Divider />
+              <PriceRow
+                marginTop={1.75}
+                data-testid='bike-overview-single-price'
+              >
+                <Box display='flex' alignItems='center'>
+                  <Typography marginRight={1}>Subtotal</Typography>
+                  <InfoIcon fontSize='small' />
+                </Box>
+
+                <Typography>{subtotal} €</Typography>
+              </PriceRow>
+              <PriceRow
+                marginTop={1.5}
+                data-testid='bike-overview-single-price'
+              >
+                <Box display='flex' alignItems='center'>
+                  <Typography marginRight={1}>Service Fee</Typography>
+                  <InfoIcon fontSize='small' />
+                </Box>
+
+                <Typography>{servicesFee} €</Typography>
+              </PriceRow>
+              <PriceRow marginTop={1.75} data-testid='bike-overview-total'>
+                <Typography fontWeight={800} fontSize={16}>
+                  Total
+                </Typography>
+                <Typography variant='h2' fontSize={24} letterSpacing={1}>
+                  {total} €
+                </Typography>
+              </PriceRow>
+              <BookingButton
+                fullWidth
+                disableElevation
+                variant='contained'
+                data-testid='bike-booking-button'
+                onClick={() => handleBookingBike()}
+              >
+                Add to booking
+              </BookingButton>
+            </>
+          )}
         </OverviewContainer>
       </Content>
     </div>

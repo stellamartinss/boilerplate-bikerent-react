@@ -1,43 +1,35 @@
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
-import { addDays, format } from 'date-fns';
-import { DateRange, DayPicker } from 'react-day-picker';
 import {
-  BookingCalendarMobile,
   BookingCalendarDesktop,
   MobileDateViewer,
   DividerSwipe,
   DividerSwipeDiv,
   CalendarIcon,
+  SelectButton,
+  DivDesktopCalendar,
+  DivMobileCalendar,
 } from './BookingCalendar.styles';
-import './calendar-style.css';
+import './utils/calendar-style.css';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import moment from 'moment';
 
-const pastMonth = new Date(2020, 10, 15);
-
-const BookingCalendar = () => {
-  const today = new Date();
-
-  const defaultSelected: DateRange = {
-    from: pastMonth,
-    to: addDays(pastMonth, 4),
-  };
-
-  const [range, setRange] = useState<DateRange | undefined | any>(
-    defaultSelected
+const BookingCalendar = ({ dateRange, setDateRange, pastMonth, bike }: any) => {
+  let footer = (
+    <DivMobileCalendar>
+      <SelectButton
+        fullWidth
+        disableElevation
+        variant='contained'
+        data-testid='bike-select'
+        color='secondary'
+        onClick={() => setDisplayMobileCalendar(false)}
+      >
+        Select
+      </SelectButton>
+    </DivMobileCalendar>
   );
-
-  let footer = '';
-  const [selectedDay, setSelectedDay] = useState<Date | any>(today);
   const [displayMobileCalendar, setDisplayMobileCalendar] = useState(false);
-
-  useEffect(() => {
-    console.log(range);
-  }, [range]);
 
   const toggleDrawer =
     (anchor: any, open: boolean) =>
@@ -53,12 +45,27 @@ const BookingCalendar = () => {
 
       setDisplayMobileCalendar(!displayMobileCalendar);
     };
-  debugger;
+
+  const calendar = (
+    <BookingCalendarDesktop
+      id='test'
+      mode='range'
+      defaultMonth={pastMonth}
+      selected={dateRange}
+      footer={footer}
+      onSelect={setDateRange}
+      captionLayout='dropdown-buttons'
+      fromYear={2015}
+      toYear={2025}
+    />
+  );
+
   const mobileDateButton = (
     <MobileDateViewer onClick={() => setDisplayMobileCalendar(true)}>
       <CalendarIcon />
       <>
-        From {moment(range.from).format('MMM/YYYY')} to { moment(range.to).format('MMM/YYYY')}
+        From {moment(dateRange.from).format('MMM/YYYY')} to{' '}
+        {moment(dateRange.to).format('MMM/YYYY')}
       </>
     </MobileDateViewer>
   );
@@ -78,28 +85,9 @@ const BookingCalendar = () => {
         >
           <DividerSwipe variant='middle' />
         </DividerSwipeDiv>
-        <BookingCalendarMobile
-          id='test'
-          mode='range'
-          className='mobile'
-          defaultMonth={pastMonth}
-          selected={range}
-          footer={footer}
-          onSelect={setRange}
-        />
+        {calendar}
       </SwipeableDrawer>
     </>
-  );
-
-  const desktop = (
-    <BookingCalendarDesktop
-      id='test'
-      mode='range'
-      defaultMonth={pastMonth}
-      selected={range}
-      footer={footer}
-      onSelect={setRange}
-    />
   );
 
   return (
@@ -108,9 +96,11 @@ const BookingCalendar = () => {
         Select date and time
       </Typography>
 
-      {mobileDateButton}
-      {mobile}
-      {desktop}
+      <DivMobileCalendar>
+        {mobileDateButton}
+        {mobile}
+      </DivMobileCalendar>
+      <DivDesktopCalendar>{calendar}</DivDesktopCalendar>
     </>
   );
 };

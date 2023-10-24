@@ -5,12 +5,8 @@ import {
   BoxProps,
   Button,
   ButtonProps,
-  Chip,
-  ChipProps,
   Divider,
   DividerProps,
-  Icon,
-  IconProps,
   SwipeableDrawer,
   SwipeableDrawerProps,
   styled,
@@ -20,13 +16,6 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 
 export const BookingCalendarDesktop = styled(DayPicker)<DayPickerProps>(
   ({ theme }) => ({
-    display: 'none', // Hide by default on all screens
-
-    // Display block on screens larger than 'sm'
-    [theme.breakpoints.up('md')]: {
-      display: 'block',
-    },
-    // display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: theme.palette.primary.main,
@@ -39,12 +28,6 @@ export const BookingCalendarDesktop = styled(DayPicker)<DayPickerProps>(
 
 export const BookingCalendarMobile = styled(DayPicker)<DayPickerProps>(
   ({ theme }) => ({
-    display: 'none', // Hide by default on all screens
-
-    // Display block on screens smaller than 'sm'
-    [theme.breakpoints.down('sm')]: {
-      display: 'block',
-    },
     justifyContent: 'space-between',
     alignItems: 'center',
     color: '#fff',
@@ -88,9 +71,36 @@ export const DividerSwipeDiv = styled(Box)<BoxProps>(({ theme }) => ({
   textAlign: 'center',
 }));
 
-export const CalendarIcon = styled(
-  CalendarMonthOutlinedIcon
-)<any>(({ theme }) => ({
+export const CalendarIcon = styled(CalendarMonthOutlinedIcon)<any>(
+  ({ theme }) => ({
     marginRight: 2,
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
+  })
+);
+
+export const SelectButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  borderRadius: 20,
+  padding: '18px 0',
+  marginTop: 30,
+  textTransform: 'none',
+  color: theme.palette.common.black,
+  fontWeight: 800,
 }));
+
+export const DivDesktopCalendar = styled('div')(({ theme }) => ({
+  display: 'none',
+
+  [theme.breakpoints.up('md')]: {
+    display: 'block',
+  },
+}));
+
+export const DivMobileCalendar = styled('div')(({ theme }) => ({
+  display: 'none',
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'block',
+  },
+}));
+
+

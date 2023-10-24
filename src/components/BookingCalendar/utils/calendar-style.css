@@ -3,7 +3,7 @@ button.rdp-button_reset.rdp-button.rdp-day {
   border: unset;
   color: white;
   opacity: 0.5;
-  padding: 10px 10px;
+  padding: 8px 11px;
   font-weight: 400;
 }
 
@@ -19,6 +19,7 @@ table#test-grid-0 {
 .rdp-caption {
   display: flex;
   margin-bottom: 40px;
+  margin-top: 20px;
 }
 
 .rdp-caption_label {
@@ -61,7 +62,7 @@ button.rdp-button_reset.rdp-button.rdp-day.rdp-day_range_end {
   background: white;
   opacity: 1;
   color: #1f49d1;
-  padding: 11px 11px;
+  padding: 8px 11px;
   border-radius: 20px;
 }
 
@@ -75,4 +76,32 @@ button.rdp-button_reset.rdp-button.rdp-day.rdp-day_selected.rdp-day_range_middle
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-9emuhu-MuiPaper-root-MuiDrawer-paper {
   background-color: #1f49d1;
   border-radius: 30px 30px 0px 0px;
+}
+
+.rdp-day_today {
+  color: red;
+}
+
+select.rdp-dropdown {
+  font-family: 'Mont', sans-serif;
+}
+
+.rdp-dropdown_month .rdp-caption_label {
+  font-size: 34px;
+}
+
+.rdp-dropdown_year .rdp-caption_label {
+  font-size: 16px;
+  opacity: 0.5;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.rdp-dropdown_month select.rdp-dropdown,
+.rdp-dropdown_year select.rdp-dropdown,
+.rdp-vhidden,
+.rdp-dropdown_month select.rdp-dropdown option,
+.rdp-dropdown_year select.rdp-dropdown option,
+svg.rdp-dropdown_icon {
+  display: none;
 }

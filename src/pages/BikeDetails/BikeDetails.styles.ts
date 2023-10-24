@@ -5,6 +5,8 @@ import {
   ButtonProps,
   Card,
   CardProps,
+  Dialog,
+  DialogProps,
   IconButton,
   IconButtonProps,
   styled,
@@ -13,6 +15,10 @@ import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import ChevronRightOutlined from '@mui/icons-material/ChevronRightOutlined';
 import HomeOutlined from '@mui/icons-material/HomeOutlined';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
+
+interface BikeImageProps extends BoxProps {
+  isLoaded: boolean;
+}
 
 export const BreadcrumbContainer = styled(Box)<BoxProps>(({ theme }) => ({
   position: 'relative',
@@ -77,7 +83,7 @@ export const InfoIcon = styled(InfoOutlined)(({ theme }) => ({
 export const OverviewContainer = styled(Card)<CardProps>(({ theme }) => ({
   borderColor: theme.palette.grey[500],
   padding: 34,
-  maxHeight: 895,
+  height: 'fit-content',
 }));
 
 export const BookingButton = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -93,4 +99,34 @@ export const PriceRow = styled(Box)<BoxProps>(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+}));
+
+export const BikeImage = styled('img', {
+  shouldForwardProp: (prop) => prop !== 'isLoaded',
+})<BikeImageProps>(({ isLoaded }) => ({
+  display: isLoaded ? 'block' : 'none',
+}));
+
+export const BikeBookedBox = styled(Box)<BoxProps>(({ theme }) => ({
+  margin: '40px',
+  textAlign: 'center',
+}));
+
+export const GoToHomeButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  borderRadius: 20,
+  padding: '18px 0',
+  marginBottom: '30px',
+  width: '100%',
+  textTransform: 'none',
+  color: theme.palette.common.white,
+  backgroundColor: theme.palette.primary.main,
+  fontWeight: 800,
+}));
+
+export const DivDesktopCalendar = styled('div')(({ theme }) => ({
+  display: 'none',
+
+  [theme.breakpoints.up('md')]: {
+    display: 'block',
+  },
 }));
