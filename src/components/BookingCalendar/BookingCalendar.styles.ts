@@ -90,7 +90,7 @@ export const SelectButton = styled(Button)<ButtonProps>(({ theme }) => ({
 export const DivDesktopCalendar = styled('div')(({ theme }) => ({
   display: 'none',
 
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up('lg')]: {
     display: 'block',
   },
 }));
@@ -98,9 +98,7 @@ export const DivDesktopCalendar = styled('div')(({ theme }) => ({
 export const DivMobileCalendar = styled('div')(({ theme }) => ({
   display: 'none',
 
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('lg')]: {
     display: 'block',
   },
 }));
-
-

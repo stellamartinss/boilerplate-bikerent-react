@@ -35,6 +35,7 @@ import BookingCalendar from 'components/BookingCalendar/BookingCalendar.componen
 import { DateRange, DayPicker } from 'react-day-picker';
 import { useEffect, useState } from 'react';
 import { addDays, format } from 'date-fns';
+import apiClient from 'services/api';
 
 const pastMonth = new Date(2020, 10, 15);
 
@@ -62,6 +63,7 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
   const [total, setTotal] = useState<number>(ratesByDay + servicesFee);
   const [isBikeBooked, setIsBikeBooked] = useState(false);
   const [openIsBookedDialog, setOpenoIsBookedDialog] = useState(false);
+  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
 
   useEffect(() => {
     const totalDays = calculateHowManyBookingDays(dateRange);
@@ -72,13 +74,37 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
     setTotal(sTotal + servicesFee);
   }, [dateRange, ratesByDay, servicesFee]);
 
+  useEffect(() => {
+console.log(screenWidth)
+  }, [screenWidth])
+
+  const handleWindowWidth = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowWidth);
+    return () => {
+      window.removeEventListener('resize', handleWindowWidth);
+    };
+  }, []);
+
   const handleBookingBike = () => {
-    // const getAllBikes = async () => {
-    //   const response = await apiClient.get('/bikes');
-    //   setBikes(response.data);
-    // };
-    setOpenoIsBookedDialog(true);
-    setIsBikeBooked(true);
+    const saveBooking = async () => {
+      const data = {
+        userId: 1,
+        bikeId: bike?.id,
+        price: total,
+      };
+      const response = await apiClient.post('/bike/rent', data);
+
+      if (response) {
+        setOpenoIsBookedDialog(true);
+        setIsBikeBooked(true);
+      }
+    };
+
+    saveBooking();
   };
 
   const calculateHowManyBookingDays = (range: any) => {
@@ -247,7 +273,7 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
           variant='outlined'
           data-testid='bike-overview-container'
         >
-          {mobileBikeBooked}
+          {screenWidth <= 899 && mobileBikeBooked}
 
           {isBikeBooked && desktopBooked}
 

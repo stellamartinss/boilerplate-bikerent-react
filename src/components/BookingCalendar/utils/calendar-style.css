@@ -28,7 +28,7 @@ table#test-grid-0 {
 
 .rdp-nav {
   flex: 2;
-  text-align: center;
+  text-align: end;
 }
 
 button.rdp-button_reset.rdp-button.rdp-nav_button.rdp-nav_button_previous,

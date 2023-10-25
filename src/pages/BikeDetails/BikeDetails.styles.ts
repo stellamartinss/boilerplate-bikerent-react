@@ -130,3 +130,4 @@ export const DivDesktopCalendar = styled('div')(({ theme }) => ({
     display: 'block',
   },
 }));
+
