@@ -7,15 +7,9 @@ import BikeDetails from './BikeDetails.component'
 
 describe('BikeDetails page', () => {
 
-  const mockBike = {
-    id: 1,
-    name: 'Sample Bike',
-    // Add other properties as needed for testing
-  };
 
 
   beforeEach(() => {
-    // eslint-disable-next-line testing-library/no-render-in-setup
     render(
       <BrowserRouter>
         <BikeDetails bike={mockedBike} />
@@ -24,7 +18,6 @@ describe('BikeDetails page', () => {
   })
 
   it('renders the BikeDetails component with a bike', () => {
-    // Ensure that important elements are present
     expect(screen.getByText('Sample Bike')).toBeInTheDocument();
     expect(screen.getByTestId('bike-name-details')).toBeInTheDocument();
   });
@@ -32,22 +25,16 @@ describe('BikeDetails page', () => {
   
   it('displays the booking calendar and handles booking', () => {
 
-    // Check if the Booking Calendar is present
     expect(screen.getByTestId('bike-details-page')).toBeInTheDocument();
 
-    // Check if the Add to Booking button is initially present
     expect(screen.getByTestId('bike-booking-button')).toBeInTheDocument();
 
-    // Simulate a click on the Add to Booking button
     fireEvent.click(screen.getByTestId('bike-booking-button'));
 
-    // Check if the dialog opens upon clicking the button
     expect(screen.getByText('Thank you!')).toBeInTheDocument();
 
-    // Simulate closing the dialog
     fireEvent.click(screen.getByTestId('go-to-home-btn'));
 
-    // Check if the dialog closes
     expect(screen.queryByText('Thank you!')).toBeNull();
   });
 

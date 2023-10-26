@@ -15,8 +15,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import moment from 'moment';
 
 const BookingCalendar = ({ dateRange, setDateRange, pastMonth, bike }: any) => {
-
-  const today = new Date()
+  const today = new Date();
 
   let footer = (
     <DivMobileCalendar>
@@ -24,7 +23,6 @@ const BookingCalendar = ({ dateRange, setDateRange, pastMonth, bike }: any) => {
         fullWidth
         disableElevation
         variant='contained'
-        data-testid='bike-select'
         color='secondary'
         onClick={() => setDisplayMobileCalendar(false)}
       >
@@ -57,11 +55,11 @@ const BookingCalendar = ({ dateRange, setDateRange, pastMonth, bike }: any) => {
       selected={dateRange}
       footer={footer}
       onSelect={(e: any) => {
-        if(!e.to || !e.from) {
-          return
+        if (!e.to || !e.from) {
+          return;
         }
 
-        setDateRange(e)
+        setDateRange(e);
       }}
       captionLayout='dropdown-buttons'
       fromMonth={today}
@@ -71,7 +69,10 @@ const BookingCalendar = ({ dateRange, setDateRange, pastMonth, bike }: any) => {
   );
 
   const mobileDateButton = (
-    <MobileDateViewer onClick={() => setDisplayMobileCalendar(true)}>
+    <MobileDateViewer
+      data-testid='mobile-date-button'
+      onClick={() => setDisplayMobileCalendar(true)}
+    >
       <CalendarIcon />
       <>
         From {moment(dateRange.from).format('MMM/YYYY')} to{' '}
@@ -101,7 +102,7 @@ const BookingCalendar = ({ dateRange, setDateRange, pastMonth, bike }: any) => {
   );
 
   return (
-    <>
+    <div data-testid='bike-select'>
       <Typography variant='h1' fontSize={24} marginBottom={1.25}>
         Select date and time
       </Typography>
@@ -111,7 +112,7 @@ const BookingCalendar = ({ dateRange, setDateRange, pastMonth, bike }: any) => {
         {mobile}
       </DivMobileCalendar>
       <DivDesktopCalendar>{calendar}</DivDesktopCalendar>
-    </>
+    </div>
   );
 };
 

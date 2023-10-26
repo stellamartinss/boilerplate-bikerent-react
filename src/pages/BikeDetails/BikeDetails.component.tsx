@@ -4,7 +4,6 @@ import {
   Dialog,
   Divider,
   Link,
-  SwipeableDrawer,
   Typography,
 } from '@mui/material';
 import BikeImageSelector from 'components/BikeImageSelector';
@@ -32,9 +31,9 @@ import {
   PriceRow,
 } from './BikeDetails.styles';
 import BookingCalendar from 'components/BookingCalendar/BookingCalendar.component';
-import { DateRange, DayPicker } from 'react-day-picker';
+import { DateRange } from 'react-day-picker';
 import { useEffect, useState } from 'react';
-import { addDays, format } from 'date-fns';
+import { addDays } from 'date-fns';
 import apiClient from 'services/api';
 
 const pastMonth = new Date();
@@ -116,10 +115,6 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
     const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
 
     return daysDifference;
-  };
-
-  const handleClickOpen = () => {
-    setOpenoIsBookedDialog(true);
   };
 
   const bikeBooked = (

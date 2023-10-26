@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import BookingCalendar from './BookingCalendar.component';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('BookingCalendar', () => {
   const dateRange = {
@@ -13,36 +14,46 @@ describe('BookingCalendar', () => {
 
   it('renders the component with provided props', () => {
     const { getByText, getByTestId } = render(
-      <BookingCalendar dateRange={dateRange} setDateRange={setDateRange} pastMonth={pastMonth} bike={bike} />
+      <BrowserRouter>
+        <BookingCalendar
+          dateRange={dateRange}
+          setDateRange={setDateRange}
+          pastMonth={pastMonth}
+          bike={bike}
+        />
+      </BrowserRouter>
     );
 
-    // Check if the component renders correctly
-    // eslint-disable-next-line testing-library/prefer-screen-queries
     expect(getByText('Select date and time')).toBeInTheDocument();
-    // eslint-disable-next-line testing-library/prefer-screen-queries
+
     expect(getByTestId('bike-select')).toBeInTheDocument();
   });
 
   it('displays mobile calendar when the button is clicked', () => {
+    const originalInnerWidth = window.innerWidth;
+
+    window.innerWidth = 320;
+
     const { getByText, getByTestId } = render(
-      <BookingCalendar dateRange={dateRange} setDateRange={setDateRange} pastMonth={pastMonth} bike={bike} />
+      <BrowserRouter>
+        <BookingCalendar
+          dateRange={dateRange}
+          setDateRange={setDateRange}
+          pastMonth={pastMonth}
+          bike={bike}
+        />
+      </BrowserRouter>
     );
 
-    // Check if the mobile calendar is initially hidden
-    // eslint-disable-next-line testing-library/prefer-screen-queries
     expect(getByText('Select date and time')).toBeInTheDocument();
-    expect(setDateRange).not.toHaveBeenCalled(); // Ensure setDateRange hasn't been called yet
+    expect(setDateRange).not.toHaveBeenCalled();
 
-    // Click the mobile date button to open the calendar
-    // eslint-disable-next-line testing-library/prefer-screen-queries
     const mobileDateButton = getByTestId('mobile-date-button');
     fireEvent.click(mobileDateButton);
 
-    // Check if the mobile calendar is now displayed
-    // eslint-disable-next-line testing-library/prefer-screen-queries
     expect(getByText('Select date and time')).toBeInTheDocument();
-    expect(setDateRange).not.toHaveBeenCalled(); // Ensure setDateRange still hasn't been called
-  });
+    expect(setDateRange).not.toHaveBeenCalled();
 
-  // You can write additional tests for other interactions and behaviors of your component.
+    window.innerWidth = originalInnerWidth;
+  });
 });
