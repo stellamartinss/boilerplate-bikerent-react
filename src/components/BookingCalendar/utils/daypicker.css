@@ -66,6 +66,12 @@ button.rdp-button_reset.rdp-button.rdp-day.rdp-day_range_end {
   border-radius: 20px;
 }
 
+button.rdp-button_reset.rdp-button.rdp-day.rdp-day_today {
+  border-radius: 20px;
+  border: 1px solid white;
+  padding: 8px 11px;
+}
+
 button.rdp-button_reset.rdp-button.rdp-day.rdp-day_selected.rdp-day_range_middle {
   opacity: 0.5;
   background-color: white;

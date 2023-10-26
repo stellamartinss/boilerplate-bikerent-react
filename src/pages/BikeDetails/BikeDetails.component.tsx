@@ -37,7 +37,7 @@ import { useEffect, useState } from 'react';
 import { addDays, format } from 'date-fns';
 import apiClient from 'services/api';
 
-const pastMonth = new Date(2020, 10, 15);
+const pastMonth = new Date();
 
 interface BikeDetailsProps {
   bike?: Bike;
@@ -45,6 +45,7 @@ interface BikeDetailsProps {
 
 const BikeDetails = ({ bike }: BikeDetailsProps) => {
   const ratesByDay = bike?.rate || 0;
+  
   const rateByWeek = ratesByDay * 7;
   const today = new Date();
 
@@ -74,10 +75,6 @@ const BikeDetails = ({ bike }: BikeDetailsProps) => {
     setTotal(sTotal + servicesFee);
   }, [dateRange, ratesByDay, servicesFee]);
 
-  useEffect(() => {
-console.log(screenWidth)
-  }, [screenWidth])
-
   const handleWindowWidth = () => {
     setScreenWidth(window.innerWidth);
   };
@@ -94,7 +91,10 @@ console.log(screenWidth)
       const data = {
         userId: 1,
         bikeId: bike?.id,
-        price: total,
+        rate: bike?.rate,
+        price: subtotal,
+        to: dateRange.to,
+        from: dateRange.from
       };
       const response = await apiClient.post('/bike/rent', data);
 

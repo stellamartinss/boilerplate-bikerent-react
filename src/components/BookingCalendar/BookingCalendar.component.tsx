@@ -10,11 +10,14 @@ import {
   DivDesktopCalendar,
   DivMobileCalendar,
 } from './BookingCalendar.styles';
-import './utils/calendar-style.css';
+import './utils/daypicker.css';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import moment from 'moment';
 
 const BookingCalendar = ({ dateRange, setDateRange, pastMonth, bike }: any) => {
+
+  const today = new Date()
+
   let footer = (
     <DivMobileCalendar>
       <SelectButton
@@ -53,10 +56,17 @@ const BookingCalendar = ({ dateRange, setDateRange, pastMonth, bike }: any) => {
       defaultMonth={pastMonth}
       selected={dateRange}
       footer={footer}
-      onSelect={setDateRange}
+      onSelect={(e: any) => {
+        if(!e.to || !e.from) {
+          return
+        }
+
+        setDateRange(e)
+      }}
       captionLayout='dropdown-buttons'
-      fromYear={2015}
-      toYear={2025}
+      fromMonth={today}
+      fromYear={today.getFullYear()}
+      toYear={today.getFullYear() + 3}
     />
   );
 
