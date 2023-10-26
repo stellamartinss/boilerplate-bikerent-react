@@ -111,3 +111,27 @@ select.rdp-dropdown {
 svg.rdp-dropdown_icon {
   display: none;
 }
+
+/* Estilos para smartphones pequenos (portrait) */
+@media (max-width: 576px) {
+  /* Estilos para telas menores ou iguais a 576px */
+}
+
+/* Estilos para smartphones médios (portrait) */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Estilos para telas entre 768px e 991px */
+}
+
+/* Estilos para tablets */
+@media (min-width: 992px) and (max-width: 1399px) {
+  button.rdp-button_reset.rdp-button.rdp-day {
+    font-size: 12px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  td.rdp-cell {
+    text-align: center;
+    width: 1000px;
+  }
+}
